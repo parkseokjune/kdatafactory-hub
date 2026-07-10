@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kdatafactory — Korean Market Data, Machine-Readable</title>
+<meta name="description" content="A suite of pay-per-result scrapers turning Korean platform data — K-beauty, K-fashion, K-pop, crowdfunding, resale — into clean English JSON.">
+<meta property="og:title" content="kdatafactory — Korean Market Data, Machine-Readable">
+<meta property="og:description" content="A suite of pay-per-result scrapers turning Korean platform data into clean English JSON.">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --ground: #f7f7f4; --panel: #ffffff; --panel-2: #f1f2ee; --line: #e4e5df;
+    --ink: #15171c; --muted: #565b63; --faint: #888d96;
+    --accent: #0c8f80; --accent-ink: #0a6f63; --accent-soft: rgba(12,143,128,.10);
+    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1;
+    --grid: rgba(20,25,30,.045);
+    --font-mono: ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+    --font-sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #090b10; --panel: #11141b; --panel-2: #161a22; --line: #232834;
+      --ink: #eceef2; --muted: #99a1ad; --faint: #616977;
+      --accent: #2dd4bf; --accent-ink: #5eead4; --accent-soft: rgba(45,212,191,.12);
+      --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee;
+      --grid: rgba(120,200,190,.05);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #f7f7f4; --panel: #ffffff; --panel-2: #f1f2ee; --line: #e4e5df;
+    --ink: #15171c; --muted: #565b63; --faint: #888d96;
+    --accent: #0c8f80; --accent-ink: #0a6f63; --accent-soft: rgba(12,143,128,.10);
+    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1;
+    --grid: rgba(20,25,30,.045);
+  }
+  :root[data-theme="dark"] {
+    --ground: #090b10; --panel: #11141b; --panel-2: #161a22; --line: #232834;
+    --ink: #eceef2; --muted: #99a1ad; --faint: #616977;
+    --accent: #2dd4bf; --accent-ink: #5eead4; --accent-soft: rgba(45,212,191,.12);
+    --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee;
+    --grid: rgba(120,200,190,.05);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--font-sans); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: var(--font-mono); }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* top bar */
+  .topbar { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--ground) 88%, transparent); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .wordmark { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-weight: 700; font-size: 15px; letter-spacing: -.01em; }
+  .logo { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg, var(--accent), var(--fashion)); display: grid; place-items: center; color: #06110f; font-weight: 900; font-size: 15px; }
+  .wordmark .dim { color: var(--faint); }
+  .topnav { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); display: flex; gap: 22px; }
+  .topnav a:hover { color: var(--accent-ink); }
+  .topnav .store { color: var(--accent-ink); }
+  @media (max-width: 620px){ .topnav { display: none; } }
+
+  /* hero */
+  .hero { padding: 74px 0 30px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); }
+  h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 800; margin: 18px 0 0; text-wrap: balance; max-width: 15ch; }
+  h1 .g { color: var(--accent); }
+  .lede { font-size: clamp(1.05rem, 1.7vw, 1.22rem); color: var(--muted); max-width: 52ch; margin: 22px 0 0; }
+
+  .transform { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch; margin: 34px 0 0; max-width: 660px; }
+  .tcard { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 15px 16px; font-family: var(--font-mono); font-size: 12.5px; overflow: hidden; }
+  .tcard .cap { color: var(--faint); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+  .tcard .ko { color: var(--ink); font-size: 13px; line-height: 1.8; }
+  .tcard .won { color: var(--muted); }
+  .arrow { display: grid; place-items: center; color: var(--accent); font-family: var(--font-mono); font-size: 20px; }
+  .tcard.out { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); background: color-mix(in srgb, var(--accent-soft) 60%, var(--panel)); }
+  .tcard .k { color: var(--accent-ink); }
+  .tcard .s { color: var(--muted); }
+  .tcard .n { color: var(--fashion); }
+  @media (max-width: 560px){ .transform { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); height: 22px; } }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 0; margin: 40px 0 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--panel); }
+  .stat { flex: 1 1 140px; padding: 16px 18px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-family: var(--font-mono); font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .stat .lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  @media (max-width: 560px){ .stat { flex-basis: 50%; border-bottom: 1px solid var(--line); } }
+
+  /* catalog */
+  .catalog { padding: 46px 0 20px; }
+  .cat { margin-top: 40px; }
+  .cathead { display: flex; align-items: baseline; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; align-self: center; }
+  .cathead h2 { font-size: 1.02rem; font-weight: 700; letter-spacing: .02em; margin: 0; }
+  .cathead .cnt { font-family: var(--font-mono); font-size: 12px; color: var(--faint); margin-left: auto; }
+
+  .rows { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; }
+  @media (max-width: 720px){ .rows { grid-template-columns: 1fr; } }
+  .row { display: flex; align-items: flex-start; gap: 14px; padding: 15px 8px 15px 4px; border-bottom: 1px solid var(--line); transition: background .16s ease; border-radius: 6px; }
+  a.row:hover { background: var(--panel-2); }
+  a.row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .row .body { flex: 1; min-width: 0; }
+  .row .nm { font-weight: 650; font-size: .98rem; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+  a.row .nm { color: var(--ink); }
+  a.row:hover .nm { color: var(--accent-ink); }
+  .row .desc { color: var(--muted); font-size: .86rem; margin-top: 3px; line-height: 1.45; }
+  .row .meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .price { font-family: var(--font-mono); font-size: .82rem; color: var(--ink); font-weight: 600; }
+  .price .u { color: var(--faint); font-weight: 400; }
+  .pill { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 7px; border-radius: 5px; font-weight: 600; }
+  .pill.live { color: var(--accent-ink); background: var(--accent-soft); }
+  .pill.soon { color: var(--faint); border: 1px solid var(--line); }
+  .row.soonrow { cursor: default; }
+  .row.soonrow .nm { color: var(--muted); }
+
+  /* how / trust */
+  .how { padding: 56px 0 10px; }
+  .how h3, .trust h3 { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 22px; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; counter-reset: s; }
+  @media (max-width: 640px){ .steps { grid-template-columns: 1fr; } }
+  .step { border-top: 2px solid var(--accent); padding-top: 14px; }
+  .step .k { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
+  .step h4 { margin: 6px 0 5px; font-size: 1.02rem; letter-spacing: -.01em; }
+  .step p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+  .trust { padding: 52px 0; }
+  .tgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  @media (max-width: 640px){ .tgrid { grid-template-columns: 1fr; } }
+  .tcell { background: var(--panel); padding: 22px 20px; }
+  .tcell .h { font-weight: 700; font-size: .98rem; margin-bottom: 6px; }
+  .tcell p { margin: 0; color: var(--muted); font-size: .88rem; }
+
+  /* footer */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 60px; margin-top: 20px; }
+  .foot { display: flex; flex-wrap: wrap; gap: 18px 30px; align-items: center; justify-content: space-between; }
+  .foot .links { display: flex; gap: 22px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+  .foot .links a:hover { color: var(--accent-ink); }
+  .foot .fine { font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); }
+
+  .reveal { opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce){ .reveal { animation: none; opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap">
+    <a class="wordmark" href="https://apify.com/kdatafactory" aria-label="kdatafactory home">
+      <span class="logo">K</span> kdata<span class="dim">factory</span>
+    </a>
+    <nav class="topnav">
+      <a href="#catalog">Catalog</a>
+      <a href="#how">How it works</a>
+      <a class="store" href="https://apify.com/kdatafactory">Apify Store &#8599;</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Korean market data · machine-readable</span>
+      <h1>Korea's platforms, as <span class="g">clean JSON</span>.</h1>
+      <p class="lede">A suite of pay-per-result scrapers that turn Korean e-commerce, K-pop, crowdfunding and local data into structured English output — no scraping to build or maintain.</p>
+    </div>
+
+    <div class="transform reveal" style="animation-delay:.08s" aria-hidden="true">
+      <div class="tcard">
+        <span class="cap">source · pocamarket.com</span>
+        <div class="ko">세븐틴 호시 포토카드<br><span class="won">17,500원 · 위시 312</span></div>
+      </div>
+      <div class="arrow">&#8594;</div>
+      <div class="tcard out">
+        <span class="cap">output</span>
+        <div>{ <span class="k">"artist"</span>: <span class="s">"SEVENTEEN"</span>,<br>&nbsp;&nbsp;<span class="k">"member"</span>: <span class="s">"HOSHI"</span>,<br>&nbsp;&nbsp;<span class="k">"median_price_usd"</span>: <span class="n">12.9</span> }</div>
+      </div>
+    </div>
+
+    <div class="stats reveal" style="animation-delay:.16s">
+      <div class="stat"><div class="num tnum">23</div><div class="lbl">scrapers</div></div>
+      <div class="stat"><div class="num tnum">6</div><div class="lbl">data verticals</div></div>
+      <div class="stat"><div class="num">$2&#8211;3</div><div class="lbl">per 1,000 results</div></div>
+      <div class="stat"><div class="num">EN&#8202;+&#8202;USD</div><div class="lbl">normalized output</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="catalog" id="catalog">
+  <div class="wrap">
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--beauty)"></span><h2>K-Beauty</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/oliveyoung-scraper"><div class="body"><div class="nm">Olive Young</div><div class="desc">Global storefront bestsellers, USD prices &amp; discount %.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/hwahae-scraper"><div class="body"><div class="nm">Hwahae &#183; 화해</div><div class="desc">Beauty product rankings, ratings &amp; review counts.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/glowpick-scraper"><div class="body"><div class="nm">Glowpick &#183; 글로우픽</div><div class="desc">Award-winning K-beauty product rankings.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <div class="row soonrow"><div class="body"><div class="nm">K-Beauty Rankings Feed</div><div class="desc">Olive Young &#215; Glowpick &#215; Hwahae in one call.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--fashion)"></span><h2>K-Fashion</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/musinsa-scraper"><div class="body"><div class="nm">Musinsa &#183; 무신사</div><div class="desc">Korea's #1 fashion store: products &amp; rankings.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/zigzag-scraper"><div class="body"><div class="nm">Zigzag &#183; 지그재그</div><div class="desc">Women's fashion aggregator, 8,000+ brands.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/wconcept-scraper"><div class="body"><div class="nm">W Concept</div><div class="desc">Korean designer brands, global USD storefront.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/29cm-scraper"><div class="body"><div class="nm">29CM</div><div class="desc">Curated designer &amp; lifestyle products.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--kpop)"></span><h2>K-Pop &amp; Collectibles</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/pocamarket-scraper"><div class="body"><div class="nm">Pocamarket &#183; 포카마켓</div><div class="desc">Photocard marketplace prices from the source market.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/ktown4u-scraper"><div class="body"><div class="nm">Ktown4u</div><div class="desc">K-pop albums &amp; goods, global USD store.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <div class="row soonrow"><div class="body"><div class="nm">Photocard Price Index</div><div class="desc">Median photocard prices per artist &amp; member.</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+        <div class="row soonrow"><div class="body"><div class="nm">Circle Chart</div><div class="desc">Korea's official music charts (ex-Gaon).</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--funding)"></span><h2>Crowdfunding, Trends &amp; Pop-ups</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <div class="row soonrow"><div class="body"><div class="nm">Tumblbug &#183; 텀블벅</div><div class="desc">Creative crowdfunding projects &amp; funding rates.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+        <div class="row soonrow"><div class="body"><div class="nm">Wadiz &#183; 와디즈</div><div class="desc">Reward crowdfunding campaigns + backer counts.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+        <div class="row soonrow"><div class="body"><div class="nm">Korea Trend Feed</div><div class="desc">Cross-platform "what's trending now" snapshot.</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+        <div class="row soonrow"><div class="body"><div class="nm">Popply &#183; 팝플리</div><div class="desc">Pop-up store schedules, brands &amp; locations.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--local)"></span><h2>Resale, Commerce &amp; Local</h2><span class="cnt mono">05</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/bunjang-scraper"><div class="body"><div class="nm">Bunjang &#183; 번개장터</div><div class="desc">Resale &amp; secondhand listings, no seller PII.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/joongna-scraper"><div class="body"><div class="nm">Joongna &#183; 중고나라</div><div class="desc">Korea's largest secondhand marketplace.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/encar-scraper"><div class="body"><div class="nm">Encar &#183; 엔카</div><div class="desc">Used-car listings &amp; export-market data.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/naver-place-scraper"><div class="body"><div class="nm">Naver Place</div><div class="desc">Local businesses + reviews from Naver Maps.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kurly-scraper"><div class="body"><div class="nm">Market Kurly &#183; 마켓컬리</div><div class="desc">Grocery prices, rankings &amp; keyword search.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--content)"></span><h2>Content &amp; Culture</h2><span class="cnt mono">02</span></div>
+      <div class="rows">
+        <div class="row soonrow"><div class="body"><div class="nm">Naver Webtoon</div><div class="desc">Korea's #1 webtoon platform: rankings &amp; catalog.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+        <div class="row soonrow"><div class="body"><div class="nm">Yes24 Bestsellers</div><div class="desc">Korean book &amp; K-pop album bestseller charts.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill soon">Soon</span></div></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h3>How it works</h3>
+    <div class="steps">
+      <div class="step"><span class="k">step 1</span><h4>Pick a scraper</h4><p>Choose from the catalog and set an input — a keyword, category, or just the defaults.</p></div>
+      <div class="step"><span class="k">step 2</span><h4>Run or schedule it</h4><p>Run once, or schedule a daily pull on Apify. No servers, no proxies to manage.</p></div>
+      <div class="step"><span class="k">step 3</span><h4>Get clean JSON</h4><p>Export to JSON, CSV or Excel, or wire the API into a sheet, webhook or AI agent.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap">
+    <h3>Built to be trusted</h3>
+    <div class="tgrid">
+      <div class="tcell"><div class="h">Public data, no PII</div><p>Only public catalog data — no seller nicknames, reviewer identities, or personal profiles are ever collected.</p></div>
+      <div class="tcell"><div class="h">Honest field lists</div><p>Every listing documents exactly which fields populate. Anything a source doesn't expose is disclosed, never advertised.</p></div>
+      <div class="tcell"><div class="h">Pay per result</div><p>You pay for rows returned — a few cents per run. Apify's free monthly credit covers your first ~2,000 results.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="wordmark" href="https://apify.com/kdatafactory"><span class="logo">K</span> kdata<span class="dim">factory</span></a>
+    <div class="links">
+      <a href="https://apify.com/kdatafactory">Apify Store</a>
+      <a href="https://dev.to/seok_junepark_e7fa29e15f">Dev blog</a>
+    </div>
+    <div class="fine">Korean market data, machine-readable.</div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    // Honor a ?theme=dark|light hint so a shared link can pin the intended look.
+    try {
+      var t = new URLSearchParams(location.search).get('theme');
+      if (t === 'dark' || t === 'light') root.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
