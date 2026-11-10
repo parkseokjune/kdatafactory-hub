@@ -1,8 +1,8 @@
 # kdatafactory — hub
 
 The landing page for the **kdatafactory** suite: pay-per-result scrapers that turn
-Korean platform data (K-beauty, K-fashion, K-pop, crowdfunding, resale, local) into
-clean English JSON.
+Korean platform data (used cars, K-beauty, duty free, K-fashion, commerce, crowdfunding,
+resale, K-pop, books) into clean JSON. 38 live scrapers.
 
 - **Live site:** https://parkseokjune.github.io/kdatafactory-hub/
 - **Actors:** https://apify.com/kdatafactory

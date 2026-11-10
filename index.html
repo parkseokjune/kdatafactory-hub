@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>kdatafactory — Korean Market Data, Machine-Readable</title>
-<meta name="description" content="31 pay-per-result scrapers turning Korean platform data — K-beauty, K-fashion, commerce, K-pop, resale, used cars, crowdfunding — into clean English JSON with USD prices.">
+<meta name="description" content="38 pay-per-result scrapers turning Korean platform data — used cars, K-beauty, duty free, K-fashion, commerce, crowdfunding, books — into clean JSON. Run on Apify, call by API or from AI agents.">
 <meta property="og:title" content="kdatafactory — Korean Market Data, Machine-Readable">
-<meta property="og:description" content="31 pay-per-result scrapers turning Korean platform data into clean English JSON.">
+<meta property="og:description" content="38 pay-per-result scrapers turning Korean platform data into clean JSON.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://parkseokjune.github.io/kdatafactory-hub/logo-1024.png">
 <link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
@@ -17,7 +17,7 @@
     --ground: #f6f6f3; --panel: #ffffff; --panel-2: #f1f2ee; --line: #e6e7e1; --line-soft: #eeefe9;
     --ink: #14161b; --muted: #565b63; --faint: #8a8f98;
     --accent: #0c8f80; --accent-ink: #0a6f63; --accent-soft: rgba(12,143,128,.10);
-    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1; --commerce:#0c8f80;
+    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1; --commerce:#0c8f80; --auto:#d4622a;
     --grid: rgba(20,25,30,.04);
     --shadow: 0 1px 2px rgba(20,25,30,.04), 0 8px 30px rgba(20,25,30,.05);
     --shadow-sm: 0 1px 2px rgba(20,25,30,.04), 0 3px 12px rgba(20,25,30,.04);
@@ -31,7 +31,7 @@
       --ground: #080a0e; --panel: #10131a; --panel-2: #161a22; --line: #232834; --line-soft: #1b202a;
       --ink: #eceef2; --muted: #99a1ad; --faint: #5f6775;
       --accent: #2dd4bf; --accent-ink: #5eead4; --accent-soft: rgba(45,212,191,.12);
-      --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee; --commerce:#2dd4bf;
+      --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee; --commerce:#2dd4bf; --auto:#f59a5c;
       --grid: rgba(120,200,190,.045);
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.4);
       --shadow-sm: 0 1px 2px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.3);
@@ -42,7 +42,7 @@
     --ground: #f6f6f3; --panel: #ffffff; --panel-2: #f1f2ee; --line: #e6e7e1; --line-soft: #eeefe9;
     --ink: #14161b; --muted: #565b63; --faint: #8a8f98;
     --accent: #0c8f80; --accent-ink: #0a6f63; --accent-soft: rgba(12,143,128,.10);
-    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1; --commerce:#0c8f80;
+    --beauty:#e0568a; --fashion:#5b63d6; --kpop:#9b52d6; --funding:#c98a10; --local:#0f9e8c; --content:#1f8fd1; --commerce:#0c8f80; --auto:#d4622a;
     --grid: rgba(20,25,30,.04);
     --shadow: 0 1px 2px rgba(20,25,30,.04), 0 8px 30px rgba(20,25,30,.05);
     --shadow-sm: 0 1px 2px rgba(20,25,30,.04), 0 3px 12px rgba(20,25,30,.04);
@@ -52,7 +52,7 @@
     --ground: #080a0e; --panel: #10131a; --panel-2: #161a22; --line: #232834; --line-soft: #1b202a;
     --ink: #eceef2; --muted: #99a1ad; --faint: #5f6775;
     --accent: #2dd4bf; --accent-ink: #5eead4; --accent-soft: rgba(45,212,191,.12);
-    --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee; --commerce:#2dd4bf;
+    --beauty:#fb7db0; --fashion:#8b93f2; --kpop:#c48bef; --funding:#f5bd4a; --local:#3ad6c2; --content:#54b6ee; --commerce:#2dd4bf; --auto:#f59a5c;
     --grid: rgba(120,200,190,.045);
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.4);
     --shadow-sm: 0 1px 2px rgba(0,0,0,.35), 0 4px 16px rgba(0,0,0,.3);
@@ -197,26 +197,26 @@
     <div class="reveal">
       <span class="eyebrow">Korean market data · machine-readable</span>
       <h1>Korea's platforms, as <span class="g">clean JSON</span>.</h1>
-      <p class="lede">A suite of pay-per-result scrapers that turn Korean e-commerce, K-pop, crowdfunding and local data into structured English output — no scraping to build or maintain.</p>
+      <p class="lede">Pay-per-result scrapers for Korea's used-car, beauty, retail and content platforms — structured JSON with English field names, no scrapers to build or maintain.</p>
     </div>
 
     <div class="transform reveal" style="animation-delay:.08s" aria-hidden="true">
       <div class="tcard">
-        <span class="cap">source · pocamarket.com</span>
-        <div class="ko">세븐틴 호시 포토카드<br><span class="won">17,500원 · 위시 312</span></div>
+        <span class="cap">source · encar.com</span>
+        <div class="ko">현대 쏘나타 (DN8) 2.0 · 2020년식<br><span class="won">1,230만원 · 51,662km · 대전</span></div>
       </div>
       <div class="arrow">&#8594;</div>
       <div class="tcard out">
         <span class="cap">output</span>
-        <div>{ <span class="k">"artist"</span>: <span class="s">"SEVENTEEN"</span>,<br>&nbsp;&nbsp;<span class="k">"member"</span>: <span class="s">"HOSHI"</span>,<br>&nbsp;&nbsp;<span class="k">"median_price_usd"</span>: <span class="n">12.9</span> }</div>
+        <div>{ <span class="k">"make_en"</span>: <span class="s">"Hyundai"</span>,<br>&nbsp;&nbsp;<span class="k">"year"</span>: <span class="n">2020</span>,<br>&nbsp;&nbsp;<span class="k">"price_krw"</span>: <span class="n">12300000</span>,<br>&nbsp;&nbsp;<span class="k">"mileage_km"</span>: <span class="n">51662</span> }</div>
       </div>
     </div>
 
     <div class="stats reveal" style="animation-delay:.16s">
-      <div class="stat"><div class="num tnum">31</div><div class="lbl">live scrapers</div></div>
-      <div class="stat"><div class="num tnum">7</div><div class="lbl">data verticals</div></div>
-      <div class="stat"><div class="num">$2&#8211;3</div><div class="lbl">per 1,000 results</div></div>
-      <div class="stat"><div class="num">EN&#8202;+&#8202;USD</div><div class="lbl">normalized output</div></div>
+      <div class="stat"><div class="num tnum">38</div><div class="lbl">live scrapers</div></div>
+      <div class="stat"><div class="num tnum">9</div><div class="lbl">data verticals</div></div>
+      <div class="stat"><div class="num">$2&#8211;6</div><div class="lbl">per 1,000 results</div></div>
+      <div class="stat"><div class="num">API&#8202;+&#8202;MCP</div><div class="lbl">for pipelines &amp; AI agents</div></div>
     </div>
   </div>
 </header>
@@ -225,75 +225,94 @@
   <div class="wrap">
 
     <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--auto);color:var(--auto)"></span><h2>Used Cars &amp; Vehicles</h2><span class="cnt mono">03</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/encar-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Encar &#183; 엔카</div><div class="desc">Used-car listings for exporters: make, trim, year, mileage, price. Our most-used feed.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kbchachacha-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">KB Chachacha &#183; KB차차차</div><div class="desc">Used-car listings &amp; pricing from KB.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/passo-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Passo &#183; 파쏘</div><div class="desc">Used-motorcycle listings: brand, model, year, price, mileage.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
       <div class="cathead"><span class="dot" style="background:var(--beauty);color:var(--beauty)"></span><h2>K-Beauty</h2><span class="cnt mono">04</span></div>
       <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/oliveyoung-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Olive Young</div><div class="desc">Global storefront bestsellers, USD prices &amp; discount %.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/hwahae-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Hwahae &#183; 화해</div><div class="desc">Beauty product rankings, ratings &amp; review counts.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/glowpick-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Glowpick &#183; 글로우픽</div><div class="desc">Award-winning K-beauty product rankings.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kbeauty-rankings-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">K-Beauty Rankings Feed</div><div class="desc">Olive Young &#215; Glowpick &#215; Hwahae in one call.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/oliveyoung-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Olive Young</div><div class="desc">Global storefront bestsellers by category, USD prices.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/hwahae-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Hwahae &#183; 화해</div><div class="desc">Beauty product rankings, ratings &amp; review counts.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/glowpick-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Glowpick &#183; 글로우픽</div><div class="desc">Award-winning K-beauty product rankings.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kbeauty-rankings-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">K-Beauty Rankings Feed</div><div class="desc">Olive Young &#215; Glowpick &#215; Hwahae in one call.</div></div><div class="meta"><span class="price tnum">$6.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--commerce);color:var(--commerce)"></span><h2>Duty Free &amp; Price Comparison</h2><span class="cnt mono">03</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/shilladfs-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Shilla Duty Free &#183; 신라면세점</div><div class="desc">Top-100 best-sellers across 11 categories, USD + KRW.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/lottedfs-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Lotte Duty Free &#183; 롯데면세점</div><div class="desc">Top-100 best-sellers across 14 categories, ratings &amp; reviews.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/danawa-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Danawa &#183; 다나와</div><div class="desc">Korea's #1 price-comparison site: lowest prices &amp; specs.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
       </div>
     </section>
 
     <section class="cat">
       <div class="cathead"><span class="dot" style="background:var(--fashion);color:var(--fashion)"></span><h2>K-Fashion</h2><span class="cnt mono">05</span></div>
       <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/musinsa-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Musinsa &#183; 무신사</div><div class="desc">Korea's #1 fashion store: products &amp; rankings.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/zigzag-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Zigzag &#183; 지그재그</div><div class="desc">Women's fashion aggregator, 8,000+ brands.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/wconcept-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">W Concept</div><div class="desc">Korean designer brands, global USD storefront.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/29cm-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">29CM</div><div class="desc">Curated designer &amp; lifestyle products.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/eqlstore-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">EQL &#183; 한섬</div><div class="desc">Handsome's designer editorial store bestsellers.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/musinsa-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Musinsa &#183; 무신사</div><div class="desc">Korea's #1 fashion store: products &amp; rankings.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/zigzag-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Zigzag &#183; 지그재그</div><div class="desc">Women's fashion aggregator, 8,000+ brands.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/wconcept-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">W Concept</div><div class="desc">Korean designer brands, global USD storefront.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/29cm-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">29CM</div><div class="desc">Curated designer &amp; lifestyle products.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/eqlstore-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">EQL &#183; 한섬</div><div class="desc">Handsome's designer editorial store bestsellers.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
       </div>
     </section>
 
     <section class="cat">
       <div class="cathead"><span class="dot" style="background:var(--commerce);color:var(--commerce)"></span><h2>Commerce &amp; Bestsellers</h2><span class="cnt mono">04</span></div>
       <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/naver-shopping-best-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Shopping Best</div><div class="desc">Best-sellers by most-bought, most-viewed &amp; keyword.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kakaogift-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Kakao Gift &#183; 카카오선물하기</div><div class="desc">KakaoTalk gifting trend &amp; best-seller rankings.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kream-ranking-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">KREAM &#183; 크림</div><div class="desc">Sneaker &amp; streetwear resale rankings + prices.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kurly-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Market Kurly &#183; 마켓컬리</div><div class="desc">Grocery prices, rankings &amp; keyword search.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-      </div>
-    </section>
-
-    <section class="cat">
-      <div class="cathead"><span class="dot" style="background:var(--kpop);color:var(--kpop)"></span><h2>K-Pop, Music &amp; Collectibles</h2><span class="cnt mono">05</span></div>
-      <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/pocamarket-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Pocamarket &#183; 포카마켓</div><div class="desc">Photocard marketplace prices from the source market.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/ktown4u-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Ktown4u</div><div class="desc">K-pop albums &amp; goods, global USD store.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kpop-photocard-index" target="_blank" rel="noopener"><div class="body"><div class="nm">Photocard Price Index</div><div class="desc">Median photocard prices per artist &amp; member.</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/circlechart-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Circle Chart</div><div class="desc">Korea's official music charts (ex-Gaon).</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kmusic-charts-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">K-Music Charts Feed</div><div class="desc">Melon &#215; Genie &#215; Bugs realtime streaming charts.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-      </div>
-    </section>
-
-    <section class="cat">
-      <div class="cathead"><span class="dot" style="background:var(--local);color:var(--local)"></span><h2>Resale, Used Cars &amp; Local</h2><span class="cnt mono">05</span></div>
-      <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/bunjang-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Bunjang &#183; 번개장터</div><div class="desc">Resale &amp; secondhand listings, no seller PII.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/joongna-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Joongna &#183; 중고나라</div><div class="desc">Korea's largest secondhand marketplace.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/encar-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Encar &#183; 엔카</div><div class="desc">Used-car listings &amp; export-market data.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kbchachacha-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">KB Chachacha &#183; KB차차차</div><div class="desc">Used-car listings &amp; pricing from KB.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/naver-place-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Place</div><div class="desc">Local businesses + reviews from Naver Maps.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/naver-shopping-best-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Shopping Best</div><div class="desc">Best-sellers by most-bought, most-viewed &amp; keyword.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kakaogift-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Kakao Gift &#183; 카카오선물하기</div><div class="desc">KakaoTalk gifting trend &amp; best-seller rankings.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kream-ranking-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">KREAM &#183; 크림</div><div class="desc">Sneaker &amp; streetwear resale rankings + prices.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kurly-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Market Kurly &#183; 마켓컬리</div><div class="desc">Grocery prices, rankings &amp; keyword search.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
       </div>
     </section>
 
     <section class="cat">
       <div class="cathead"><span class="dot" style="background:var(--funding);color:var(--funding)"></span><h2>Crowdfunding, Trends &amp; Pop-ups</h2><span class="cnt mono">04</span></div>
       <div class="rows">
-        <a class="row" href="https://apify.com/kdatafactory/tumblbug-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Tumblbug &#183; 텀블벅</div><div class="desc">Creative crowdfunding projects &amp; funding rates.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/wadiz-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Wadiz &#183; 와디즈</div><div class="desc">Reward crowdfunding campaigns + backer counts.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/korea-trend-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">Korea Trend Feed</div><div class="desc">Cross-platform "what's trending now" snapshot.</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/popply-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Popply &#183; 팝플리</div><div class="desc">Pop-up store schedules, brands &amp; locations.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/wadiz-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Wadiz &#183; 와디즈</div><div class="desc">Reward crowdfunding campaigns + backer counts.</div></div><div class="meta"><span class="price tnum">$6.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/tumblbug-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Tumblbug &#183; 텀블벅</div><div class="desc">Creative crowdfunding projects &amp; funding rates.</div></div><div class="meta"><span class="price tnum">$5.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/korea-trend-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">Korea Trend Feed</div><div class="desc">Cross-platform "what's trending now" snapshot.</div></div><div class="meta"><span class="price tnum">$6.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/popply-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Popply &#183; 팝플리</div><div class="desc">Pop-up store schedules, brands &amp; locations.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
       </div>
     </section>
 
     <section class="cat">
-      <div class="cathead"><span class="dot" style="background:var(--content);color:var(--content)"></span><h2>Content &amp; Culture</h2><span class="cnt mono">04</span></div>
+      <div class="cathead"><span class="dot" style="background:var(--local);color:var(--local)"></span><h2>Resale, Local &amp; Word of Mouth</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/bunjang-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Bunjang &#183; 번개장터</div><div class="desc">Resale &amp; secondhand listings, no seller PII.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/joongna-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Joongna &#183; 중고나라</div><div class="desc">Korea's largest secondhand marketplace.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/naver-place-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Place</div><div class="desc">Local businesses + reviews from Naver Maps.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/naver-blog-cafe-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Blog &amp; Cafe</div><div class="desc">Keyword search across Naver blogs &amp; cafes.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--kpop);color:var(--kpop)"></span><h2>K-Pop &amp; Music</h2><span class="cnt mono">04</span></div>
+      <div class="rows">
+        <a class="row" href="https://apify.com/kdatafactory/ktown4u-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Ktown4u</div><div class="desc">K-pop albums &amp; goods, global USD store.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/circlechart-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Circle Chart</div><div class="desc">Korea's official music charts (ex-Gaon).</div></div><div class="meta"><span class="price tnum">$3.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kmusic-charts-feed" target="_blank" rel="noopener"><div class="body"><div class="nm">K-Music Charts Feed</div><div class="desc">Melon &#215; Genie &#215; Bugs realtime streaming charts.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/interpark-ticket-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Interpark Tickets</div><div class="desc">Concert, musical &amp; performance rankings.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+      </div>
+    </section>
+
+    <section class="cat">
+      <div class="cathead"><span class="dot" style="background:var(--content);color:var(--content)"></span><h2>Books, Content &amp; Learning</h2><span class="cnt mono">07</span></div>
       <div class="rows">
         <a class="row" href="https://apify.com/kdatafactory/naver-webtoon-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Naver Webtoon</div><div class="desc">Korea's #1 webtoon platform: rankings &amp; catalog.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/yes24-bestseller-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Yes24 Bestsellers</div><div class="desc">Korean book &amp; K-pop album bestseller charts.</div></div><div class="meta"><span class="price tnum">$2.50<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/kinolights-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Kinolights</div><div class="desc">Korea OTT trend rankings (Netflix, Disney+, TVING&#8230;).</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
-        <a class="row" href="https://apify.com/kdatafactory/interpark-ticket-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Interpark Tickets</div><div class="desc">Concert, musical &amp; performance rankings.</div></div><div class="meta"><span class="price tnum">$2.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/ridibooks-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">RIDI &#183; 리디</div><div class="desc">Ebook, webnovel &amp; webtoon bestseller rankings.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/yes24-bestseller-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Yes24 Bestsellers</div><div class="desc">Korean book &amp; K-pop album bestseller charts.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kyobo-bestseller-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Kyobo Book &#183; 교보문고</div><div class="desc">Korea's #1 bookstore: weekly, monthly &amp; annual charts.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/aladin-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Aladin &#183; 알라딘</div><div class="desc">Big-3 bookstore bestsellers by category.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/kinolights-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Kinolights</div><div class="desc">Korea OTT trend rankings (Netflix, Disney+, TVING&#8230;).</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
+        <a class="row" href="https://apify.com/kdatafactory/inflearn-scraper" target="_blank" rel="noopener"><div class="body"><div class="nm">Inflearn &#183; 인프런</div><div class="desc">Korea's largest dev &amp; skills course marketplace.</div></div><div class="meta"><span class="price tnum">$4.00<span class="u">/1k</span></span><span class="pill live">Live</span></div></a>
       </div>
     </section>
 
@@ -318,7 +337,7 @@
     <div class="tgrid">
       <div class="tcell"><div class="h">Public data, no PII</div><p>Only public catalog data — no seller nicknames, reviewer identities, or personal profiles are ever collected.</p></div>
       <div class="tcell"><div class="h">Honest field lists</div><p>Every listing documents exactly which fields populate. Anything a source doesn't expose is disclosed, never advertised.</p></div>
-      <div class="tcell"><div class="h">Pay per result</div><p>You pay for rows returned — a few cents per run. Apify's free monthly credit covers your first ~2,000 results.</p></div>
+      <div class="tcell"><div class="h">Pay per result</div><p>You pay only for rows returned — a few cents per run. Apify's free $5 monthly credit covers roughly your first 1,000 results.</p></div>
     </div>
   </div>
 </section>
@@ -328,7 +347,6 @@
     <a class="wordmark" href="https://apify.com/kdatafactory"><img class="logo" src="logo-192.png" alt="" width="26" height="26"> kdata<span class="dim">factory</span></a>
     <div class="links">
       <a href="https://apify.com/kdatafactory">Apify Store</a>
-      <a href="https://dev.to/seok_junepark_e7fa29e15f">Dev blog</a>
     </div>
     <div class="fine">Korean market data, machine-readable.</div>
   </div>
